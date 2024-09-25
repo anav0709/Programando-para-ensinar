@@ -1,0 +1,44 @@
+Web VPython 3.2
+from vpython import *
+
+# Lista de compostos e suas nomenclaturas
+perguntas = [
+    ("CO2", "Dióxido de carbono"),
+    ("NaCl", "Cloreto de sódio"),
+    ("H2O", "Água"),
+    ("NH3", "Amônia"),
+    ("C6H12O6", "Glicose")
+]
+
+# Lista para armazenar rótulos
+rotulos = []
+
+# Função para limpar rótulos anteriores
+def limpar_rotulos():
+    for label_obj in rotulos:
+        label_obj.visible = False
+    rotulos.clear()  # Limpa a lista de rótulos
+
+# Função para exibir a questão e obter a resposta do usuário
+def pergunta_nomenclatura(composto, resposta_correta, cor_resposta=color.yellow):
+    global rotulos
+    texto_pergunta = "Identifique a nomenclatura do composto:"
+    rotulos.append(label(pos=vector(0, 5, 0), text=texto_pergunta, height=30, box=False, color=color.white))
+    rotulos.append(label(pos=vector(0, 3, 0), text=composto, height=30, box=False, color=color.yellow))
+    rotulos.append(label(pos=vector(0, 1, 0), text="Digite a resposta no console:", height=20, box=False, color=color.white))
+
+    # Usa input simples no console
+    resposta_usuario = input("Digite a resposta: ").strip().lower()
+    
+    limpar_rotulos()  # Limpa rótulos antes de mostrar o resultado
+
+    if resposta_usuario == resposta_correta.lower():
+        resultado = "Resposta correta!"
+        rotulos.append(label(pos=vector(0, -3, 0), text=resultado, height=20, box=False, color=cor_resposta))
+    else:
+        resultado = "Resposta incorreta. A resposta correta é: " + resposta_correta
+        rotulos.append(label(pos=vector(0, -3, 0), text=resultado, height=20, box=False, color=color.red))
+
+# Executa as perguntas
+for composto, resposta in perguntas:
+    pergunta_nomenclatura(composto, resposta, color.green)  # Altere color.green para a cor desejada
